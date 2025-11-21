@@ -8,7 +8,7 @@
     body, html { margin:0; padding:0; height:100%; background:#ffffff; color:#000000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     .container { padding: 20px 16px; max-width: 480px; margin: 0 auto; }
     .header { text-align:center; padding: 40px 0 30px; }
-    .logo { width: 90px; height: 90px; border-radius: 50%; border: 3px solid #000; }
+    .logo { width: 90px; height: 90px; border-radius: 50%; border: 3px solid #000; object-fit: cover; }
     h1 { font-size: 36px; margin: 20px 0 8px; font-weight: bold; }
     .subtitle { font-size: 16px; line-height: 1.5; margin-bottom: 30px; color: #333; }
 
@@ -29,7 +29,7 @@
     .socials img { width: 48px; height: 48px; }
 
     .apps { display: flex; justify-content: center; gap: 24px; margin: 30px 0; }
-    .apps img { height: 52px; }
+    .apps img { height: 56px; }
 
     .faq { line-height: 1.8; font-size: 15px; }
     .faq b { display: block; margin: 16px 0 8px; font-size: 16px; }
@@ -42,8 +42,7 @@
 <div class="container">
 
   <div class="header">
-    <!-- Логотип встроен в base64 — работает сразу -->
-    <img src="https://i.ibb.co.com/5Yq8g1Q/logo.jpg" alt="Чи-Фань" class="logo">
+    <img src="logo.jpg" alt="Чи-Фань" class="logo">
     <h1>Чи-Фань</h1>
     <p class="subtitle">
       Добро пожаловать в «Чи-Фань» — сеть кафе уличной азиатской кухни во Владивостоке.<br>
@@ -103,37 +102,37 @@
     <p style="text-align:center; font-size:20px; font-weight:bold;">+7 (800) 201-55-29</p>
   </div>
 
-  <!-- Соцсети — встроены в base64 -->
+  <!-- Твои загруженные иконки соцсетей -->
   <div class="socials">
-    <a href="https://instagram.com/mom_chifan" target="_blank"><img src="https://i.ibb.co.com/5kR5j7S/ig.png" alt="Instagram"></a>
-    <a href="https://t.me/momchifan" target="_blank"><img src="https://i.ibb.co.com/4pY3n8C/tg.png" alt="Telegram"></a>
-    <a href="https://vk.com/mom_chifan" target="_blank"><img src="https://i.ibb.co.com/8xB9nYv/vk.png" alt="VK"></a>
-    <a href="https://wa.me/79662798365" target="_blank"><img src="https://i.ibb.co.com/3hN4g5Q/wa.png" alt="WhatsApp"></a>
+    <a href="https://instagram.com/mom_chifan" target="_blank"><img src="instagram.png" alt="Instagram"></a>
+    <a href="https://t.me/momchifan" target="_blank"><img src="telegram.png" alt="Telegram"></a>
+    <a href="https://vk.com/mom_chifan" target="_blank"><img src="vk.png" alt="VK"></a>
+    <a href="https://wa.me/79662798365" target="_blank"><img src="whatsapp.png" alt="WhatsApp"></a>
   </div>
 
-  <!-- Кнопки магазинов — одинаковые и красивые -->
+  <!-- Твои кнопки приложений -->
   <div class="apps">
     <a href="https://apps.apple.com/us/app/%D1%87%D0%B8-%D1%84%D0%B0%D0%BD%D1%8C/id1607510961" target="_blank">
-      <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store">
+      <img src="appstore.png" alt="Загрузите в App Store">
     </a>
     <a href="https://play.google.com/store/apps/details?id=com.rubeacon.chifan" target="_blank">
-      <img src="https://i.ibb.co.com/0jG5g5K/googleplay.png" alt="Google Play" style="height:52px;">
+      <img src="google,googleplay.png" alt="СКАЧАТЬ ИЗ Google Play">
     </a>
   </div>
 
   <div class="card">
     <h2>Частые вопросы</h2>
     <div class="faq">
-      <b>1. Техническая поддержка</b>
-      Проблемы с приложением или сайтом — пишите: <a href="mailto:mail@momchifan.ru">mail@momchifan.ru</a>
+      <b>1. Техническая поддержка</b><br>
+      Проблемы с приложением или сайтом — пишите: <a href="mailto:mail@momchifan.ru">mail@momchifan.ru</a><br><br>
 
-      <b>2. Как оплатить заказ?</b>
-      Банковской картой. Карта сохраняется для следующих заказов (можно удалить/сменить в профиле).
+      <b>2. Как оплатить заказ?</b><br>
+      Банковской картой. Карта сохраняется для следующих заказов (можно удалить/сменить в профиле).<br><br>
 
-      <b>3. Карта доставки</b>
-      Собственная доставка, не во все районы. Введите адрес — увидите стоимость и возможность.
+      <b>3. Карта доставки</b><br>
+      Собственная доставка, не во все районы. Введите адрес — увидите стоимость и возможность.<br><br>
 
-      <b>4. Как удалить аккаунт</b>
+      <b>4. Как удалить аккаунт</b><br>
       Профиль → Мои данные → Удалить аккаунт → «Хочу удалить навсегда» (необратимо).
     </div>
   </div>
