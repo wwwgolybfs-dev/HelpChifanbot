@@ -28,6 +28,59 @@
     .faq { line-height: 1.8; font-size: 15px; }
     .faq b { display: block; margin: 16px 0 8px; font-size: 16px; }
     .footer { text-align: center; padding: 50px 0 20px; color: #666; font-size: 14px; }
+    
+    /* Стили для новогоднего таймера */
+    .new-year-timer {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        color: white;
+        border-radius: 16px;
+        padding: 24px;
+        margin: 24px 0;
+        text-align: center;
+        border: 1px solid #333;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .timer-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        color: #fff;
+    }
+    .timer-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 10px;
+    }
+    .time-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 70px;
+    }
+    .time-value {
+        font-size: 32px;
+        font-weight: bold;
+        background: #000;
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 10px;
+        width: 100%;
+        box-sizing: border-box;
+        font-variant-numeric: tabular-nums;
+    }
+    .time-label {
+        font-size: 14px;
+        color: #ccc;
+        margin-top: 5px;
+        text-transform: uppercase;
+    }
+    .timer-note {
+        font-size: 14px;
+        color: #aaa;
+        margin-top: 10px;
+        font-style: italic;
+    }
   </style>
 </head>
 <body>
@@ -36,6 +89,30 @@
     <img src="logo.jpg" alt="Чи-Фань" class="logo">
     <h1>Чи-Фань</h1>
     <p class="subtitle">Добро пожаловать в «Чи-Фань» — сеть кафе уличной азиатской кухни во Владивостоке.<br>Лапша, рис, супы, салаты и многое другое — с доставкой или в наших кафе.</p>
+  </div>
+
+  <!-- Новогодний таймер -->
+  <div class="new-year-timer">
+    <div class="timer-title">🎄 До Нового 2025 года осталось:</div>
+    <div class="timer-container">
+      <div class="time-unit">
+        <div class="time-value" id="days">00</div>
+        <div class="time-label">Дней</div>
+      </div>
+      <div class="time-unit">
+        <div class="time-value" id="hours">00</div>
+        <div class="time-label">Часов</div>
+      </div>
+      <div class="time-unit">
+        <div class="time-value" id="minutes">00</div>
+        <div class="time-label">Минут</div>
+      </div>
+      <div class="time-unit">
+        <div class="time-value" id="seconds">00</div>
+        <div class="time-label">Секунд</div>
+      </div>
+    </div>
+    <div class="timer-note">Время Владивостока (UTC+10)</div>
   </div>
 
   <a href="https://momchifan.ru/" class="btn-big">Заказать</a>
@@ -76,5 +153,50 @@
 
   <div class="footer">Чи-Фань — еда, которая вдохновляет<br>Владивосток © 2025</div>
 </div>
+
+<script>
+// Функция для обновления таймера
+function updateNewYearTimer() {
+    // Устанавливаем часовой пояс Владивостока (UTC+10)
+    const vladivostokTime = new Date().toLocaleString("en-US", {
+        timeZone: "Asia/Vladivostok"
+    });
+    const now = new Date(vladivostokTime);
+    
+    // Устанавливаем цель: Новый год 2025 во Владивостоке
+    // 31 декабря 2024, 14:00 UTC = 00:00 1 января 2025 UTC+10
+    const newYear = new Date(Date.UTC(2024, 11, 31, 14, 0, 0));
+    
+    // Разница в миллисекундах
+    const diff = newYear - now;
+    
+    // Если Новый год уже наступил
+    if (diff <= 0) {
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        document.querySelector('.timer-title').textContent = '🎉 С Новым 2025 годом!';
+        return;
+    }
+    
+    // Вычисляем дни, часы, минуты, секунды
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    // Обновляем отображение
+    document.getElementById('days').textContent = days.toString().padStart(2, '0');
+    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+}
+
+// Запускаем таймер сразу и обновляем каждую секунду
+updateNewYearTimer();
+setInterval(updateNewYearTimer, 1000);
+</script>
+
 </body>
 </html>
