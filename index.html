@@ -153,7 +153,22 @@
 
   <div class="footer">Чи-Фань — еда, которая вдохновляет<br>Владивосток © 2025</div>
 </div>
-
+<script>
+// ВРЕМЕННЫЙ КОД ДЛЯ ОТЛАДКИ - можно удалить после проверки
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Скрипт запущен");
+    
+    const now = new Date();
+    const nowUTC = now.getTime();
+    const newYearUTC = Date.UTC(2024, 11, 31, 14, 0, 0);
+    const diff = newYearUTC - nowUTC;
+    
+    console.log("Текущее время (UTC):", now.toISOString());
+    console.log("Новый год (UTC):", new Date(newYearUTC).toISOString());
+    console.log("Разница (мс):", diff);
+    console.log("Разница (дней):", diff / (1000 * 60 * 60 * 24));
+});
+</script>
 <script>
 // Функция для обновления таймера
 function updateNewYearTimer() {
