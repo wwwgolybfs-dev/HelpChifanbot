@@ -219,11 +219,6 @@ function initMap() {
         var placemark = new ymaps.Placemark(branch[0], {
             hintContent: branch[1],  // Подсказка при наведении
             balloonContent: '<strong>' + branch[1] + '</strong><br>' + branch[2]  // Балун при клике
-        }, {
-            iconLayout: 'default#image',  // Кастомная иконка (опционально)
-            iconImageHref: 'marker.png',  // Свой маркер, если есть (иначе дефолтный)
-            iconImageSize: [30, 42],
-            iconImageOffset: [-15, -42]
         });
         myMap.geoObjects.add(placemark);
     });
