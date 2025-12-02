@@ -157,18 +157,18 @@
 <script>
 // Функция для обновления таймера
 function updateNewYearTimer() {
-    // Устанавливаем часовой пояс Владивостока (UTC+10)
-    const vladivostokTime = new Date().toLocaleString("en-US", {
-        timeZone: "Asia/Vladivostok"
-    });
-    const now = new Date(vladivostokTime);
+    // Создаем объект даты для текущего момента в UTC
+    const now = new Date();
     
-    // Устанавливаем цель: Новый год 2025 во Владивостоке
-    // 31 декабря 2024, 14:00 UTC = 00:00 1 января 2025 UTC+10
-    const newYear = new Date(Date.UTC(2024, 11, 31, 14, 0, 0));
+    // Получаем текущее время в UTC
+    const nowUTC = now.getTime();
+    
+    // Создаем объект даты для Нового года 2025 во Владивостоке (UTC+10)
+    // Это эквивалентно 31 декабря 2024, 14:00 UTC
+    const newYearUTC = Date.UTC(2024, 11, 31, 14, 0, 0);
     
     // Разница в миллисекундах
-    const diff = newYear - now;
+    const diff = newYearUTC - nowUTC;
     
     // Если Новый год уже наступил
     if (diff <= 0) {
