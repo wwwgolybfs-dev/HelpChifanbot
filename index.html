@@ -93,7 +93,7 @@
 
   <!-- Новогодний таймер -->
   <div class="new-year-timer">
-    <div class="timer-title">🎄 До Нового 2025 года осталось:</div>
+    <div class="timer-title">🎄 До Нового 2026 года осталось:</div>
     <div class="timer-container">
       <div class="time-unit">
         <div class="time-value" id="days">00</div>
@@ -154,33 +154,15 @@
   <div class="footer">Чи-Фань — еда, которая вдохновляет<br>Владивосток © 2025</div>
 </div>
 <script>
-// ВРЕМЕННЫЙ КОД ДЛЯ ОТЛАДКИ - можно удалить после проверки
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("Скрипт запущен");
-    
-    const now = new Date();
-    const nowUTC = now.getTime();
-    const newYearUTC = Date.UTC(2024, 11, 31, 14, 0, 0);
-    const diff = newYearUTC - nowUTC;
-    
-    console.log("Текущее время (UTC):", now.toISOString());
-    console.log("Новый год (UTC):", new Date(newYearUTC).toISOString());
-    console.log("Разница (мс):", diff);
-    console.log("Разница (дней):", diff / (1000 * 60 * 60 * 24));
-});
-</script>
-<script>
 // Функция для обновления таймера
 function updateNewYearTimer() {
-    // Создаем объект даты для текущего момента в UTC
+    // Текущее время в UTC
     const now = new Date();
-    
-    // Получаем текущее время в UTC
     const nowUTC = now.getTime();
     
-    // Создаем объект даты для Нового года 2025 во Владивостоке (UTC+10)
-    // Это эквивалентно 31 декабря 2024, 14:00 UTC
-    const newYearUTC = Date.UTC(2024, 11, 31, 14, 0, 0);
+    // Цель: Новый год 2026 во Владивостоке (UTC+10)
+    // 31 декабря 2025, 14:00 UTC = 00:00 1 января 2026 UTC+10
+    const newYearUTC = Date.UTC(2025, 11, 31, 14, 0, 0);
     
     // Разница в миллисекундах
     const diff = newYearUTC - nowUTC;
@@ -191,7 +173,7 @@ function updateNewYearTimer() {
         document.getElementById('hours').textContent = '00';
         document.getElementById('minutes').textContent = '00';
         document.getElementById('seconds').textContent = '00';
-        document.querySelector('.timer-title').textContent = '🎉 С Новым 2025 годом!';
+        document.querySelector('.timer-title').textContent = '🎉 С Новым 2026 годом!';
         return;
     }
     
