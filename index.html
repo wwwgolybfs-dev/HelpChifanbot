@@ -92,30 +92,6 @@
     <p class="subtitle">Добро пожаловать в «Чи-Фань» — сеть кафе уличной азиатской кухни во Владивостоке.<br>Лапша, рис, супы, салаты и многое другое — с доставкой или в наших кафе.</p>
   </div>
 
-  <!-- Новогодний таймер -->
-  <div class="new-year-timer">
-    <div class="timer-title">🎄 До Нового 2026 года осталось:</div>
-    <div class="timer-container">
-      <div class="time-unit">
-        <div class="time-value" id="days">00</div>
-        <div class="time-label">Дней</div>
-      </div>
-      <div class="time-unit">
-        <div class="time-value" id="hours">00</div>
-        <div class="time-label">Часов</div>
-      </div>
-      <div class="time-unit">
-        <div class="time-value" id="minutes">00</div>
-        <div class="time-label">Минут</div>
-      </div>
-      <div class="time-unit">
-        <div class="time-value" id="seconds">00</div>
-        <div class="time-label">Секунд</div>
-      </div>
-    </div>
-    <div class="timer-note"></div>
-  </div>
-
   <a href="https://momchifan.ru/" class="btn-big">Заказать</a>
   <a href="https://t.me/momchifan" class="btn-big btn-outline">Написать в чат</a>
 
@@ -156,45 +132,6 @@
   <div class="footer">Чи-Фань — еда, которая вдохновляет<br>Владивосток © 2025</div>
 </div>
 <script>
-// Функция для обновления таймера
-function updateNewYearTimer() {
-    // Текущее время в UTC
-    const now = new Date();
-    const nowUTC = now.getTime();
-    
-    // Цель: Новый год 2026 во Владивостоке (UTC+10)
-    // 31 декабря 2025, 14:00 UTC = 00:00 1 января 2026 UTC+10
-    const newYearUTC = Date.UTC(2025, 11, 31, 14, 0, 0);
-    
-    // Разница в миллисекундах
-    const diff = newYearUTC - nowUTC;
-    
-    // Если Новый год уже наступил
-    if (diff <= 0) {
-        document.getElementById('days').textContent = '00';
-        document.getElementById('hours').textContent = '00';
-        document.getElementById('minutes').textContent = '00';
-        document.getElementById('seconds').textContent = '00';
-        document.querySelector('.timer-title').textContent = '🎉 С Новым 2026 годом!';
-        return;
-    }
-    
-    // Вычисляем дни, часы, минуты, секунды
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    
-    // Обновляем отображение
-    document.getElementById('days').textContent = days.toString().padStart(2, '0');
-    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-}
-
-// Запускаем таймер сразу и обновляем каждую секунду
-updateNewYearTimer();
-setInterval(updateNewYearTimer, 1000);
 
 ymaps.ready(initMap);
 
