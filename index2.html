@@ -358,9 +358,24 @@ async function loadResults() {
     const res = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}`, {
       headers: { 'Authorization': `token ${GITHUB.token}` }
     });
-    if (!res.ok) throw new Error('Ошибка API: ' + res.status);
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        document.getElementById('results').textContent = 'Файл голосования не найден на GitHub 😢';
+      } else if (res.status === 401 || res.status === 403) {
+        document.getElementById('results').textContent = 'Ошибка доступа к GitHub (токен?)';
+      } else {
+        document.getElementById('results').textContent = `Ошибка GitHub API: ${res.status}`;
+      }
+      throw new Error(`GitHub error: ${res.status}`);
+    }
 
     const data = await res.json();
+
+    if (!data.content) {
+      throw new Error('Поле content отсутствует в ответе GitHub');
+    }
+
     let base64Content = data.content.replace(/\s+/g, '');
     const votes = JSON.parse(atob(base64Content));
 
@@ -377,7 +392,6 @@ async function loadResults() {
   }
 }
 
-// =============================================
 // Голосование
 async function vote(choice) {
   if (Date.now() >= DEADLINE) {
@@ -396,8 +410,22 @@ async function vote(choice) {
     const getRes = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}`, {
       headers: { 'Authorization': `token ${GITHUB.token}` }
     });
+
+    if (!getRes.ok) {
+      if (getRes.status === 404) {
+        alert('Файл votes.json не найден в репозитории!\nСоздайте его вручную на GitHub');
+      } else {
+        alert(`Ошибка доступа к файлу: ${getRes.status}`);
+      }
+      return;
+    }
+
     const file = await getRes.json();
-    
+
+    if (!file.content || !file.sha) {
+      throw new Error('Некорректный ответ от GitHub (нет content/sha)');
+    }
+
     let base64Content = file.content.replace(/\s+/g, '');
     let votes = JSON.parse(atob(base64Content));
 
@@ -410,7 +438,7 @@ async function vote(choice) {
     votes.voters = votes.voters || {};
     votes.voters[userId] = choice;
 
-    await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}`, {
+    const updateRes = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}`, {
       method: 'PUT',
       headers: {
         'Authorization': `token ${GITHUB.token}`,
@@ -424,11 +452,18 @@ async function vote(choice) {
       })
     });
 
+    if (!updateRes.ok) {
+      const errorData = await updateRes.json();
+      alert('Ошибка обновления:\n' + (errorData.message || 'Неизвестная ошибка'));
+      return;
+    }
+
     alert('Голос учтён! Спасибо!');
     loadResults();
     disableButtons();
   } catch (e) {
-    alert('Не удалось сохранить голос\n' + e.message);
+    console.error('Ошибка голосования:', e);
+    alert('Не удалось сохранить голос\n' + (e.message || 'Неизвестная ошибка'));
   }
 }
 
