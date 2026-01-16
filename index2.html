@@ -5,45 +5,199 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Чи-Фань — уличная азиатская кухня</title>
   <script src="https://api-maps.yandex.ru/2.1/?apikey=ВАШ_API_КЛЮЧ&lang=ru_RU" type="text/javascript"></script>
-  <!-- Telegram Web App скрипт -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   
   <style>
-    body, html { margin:0; padding:0; height:100%; background:#ffffff; color:#000000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    .container { padding: 20px 16px; max-width: 480px; margin: 0 auto; }
-    .header { text-align:center; padding: 40px 0 30px; }
-    .logo { width: 90px; height: 90px; border-radius: 50%; border: 3px solid #000; object-fit: cover; }
-    h1 { font-size: 36px; margin: 20px 0 8px; font-weight: bold; }
-    .subtitle { font-size: 16px; line-height: 1.5; margin-bottom: 30px; color: #333; }
-    .btn-big { display: block; background:#000; color:#fff; padding: 20px; margin: 20px 0; border-radius: 16px; text-align: center; font-size: 20px; font-weight: bold; text-decoration: none; cursor: pointer; border: none; }
-    .btn-big:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-outline { background:#fff; color:#000; border: 2px solid #000; }
-    .card { background:#f8f8f8; border-radius: 16px; padding: 24px; margin: 24px 0; border: 1px solid #eee; }
-    .card h2 { margin: 0 0 20px; font-size: 22px; font-weight: bold; text-align: center; }
-    .branch { padding: 16px 0; border-bottom: 1px solid #ddd; }
-    .branch:last-child { border-bottom: none; }
-    .branch-name { font-size: 18px; font-weight: bold; margin-bottom: 6px; }
-    .branch-type { font-size: 15px; color: #000; margin-bottom: 8px; font-weight: 600; }
-    .branch-row { display: flex; align-items: center; gap: 10px; font-size: 15px; color: #333; margin: 8px 0; }
-    .icon { font-size: 18px; }
-    .socials { display: flex; justify-content: center; gap: 32px; margin: 40px 0; }
-    .socials img { width: 48px; height: 48px; }
-    .apps { display: flex; justify-content: center; gap: 24px; margin: 30px 0; }
-    .apps img { height: 56px; }
-    .faq { line-height: 1.8; font-size: 15px; }
-    .faq b { display: block; margin: 16px 0 8px; font-size: 16px; }
-    .footer { text-align: center; padding: 50px 0 20px; color: #666; font-size: 14px; }
+    body, html { 
+      margin:0; 
+      padding:0; 
+      height:100%; 
+      background:#ffffff; 
+      color:#000000; 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+    }
+    .container { 
+      padding: 20px 16px; 
+      max-width: 480px; 
+      margin: 0 auto; 
+    }
+    .header { 
+      text-align:center; 
+      padding: 40px 0 30px; 
+    }
+    .logo { 
+      width: 90px; 
+      height: 90px; 
+      border-radius: 50%; 
+      border: 3px solid #000; 
+      object-fit: cover; 
+    }
+    h1 { 
+      font-size: 36px; 
+      margin: 20px 0 8px; 
+      font-weight: bold; 
+    }
+    .subtitle { 
+      font-size: 16px; 
+      line-height: 1.5; 
+      margin-bottom: 30px; 
+      color: #333; 
+    }
+    .btn-big { 
+      display: block; 
+      color:#000; 
+      padding: 20px; 
+      margin: 20px 0; 
+      border-radius: 16px; 
+      text-align: center; 
+      font-size: 20px; 
+      font-weight: bold; 
+      text-decoration: none; 
+      cursor: pointer; 
+      border: none; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .btn-big:disabled { 
+      opacity: 0.55; 
+      cursor: not-allowed; 
+    }
+    .btn-outline { 
+      background:#fff; 
+      color:#000; 
+      border: 2px solid #000; 
+    }
+    .card { 
+      background:#f8f8f8; 
+      border-radius: 16px; 
+      padding: 24px; 
+      margin: 24px 0; 
+      border: 1px solid #eee; 
+    }
+    .card h2 { 
+      margin: 0 0 20px; 
+      font-size: 22px; 
+      font-weight: bold; 
+      text-align: center; 
+    }
+    .branch { 
+      padding: 16px 0; 
+      border-bottom: 1px solid #ddd; 
+    }
+    .branch:last-child { 
+      border-bottom: none; 
+    }
+    .branch-name { 
+      font-size: 18px; 
+      font-weight: bold; 
+      margin-bottom: 6px; 
+    }
+    .branch-type { 
+      font-size: 15px; 
+      color: #000; 
+      margin-bottom: 8px; 
+      font-weight: 600; 
+    }
+    .branch-row { 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+      font-size: 15px; 
+      color: #333; 
+      margin: 8px 0; 
+    }
+    .icon { 
+      font-size: 18px; 
+    }
+    .socials { 
+      display: flex; 
+      justify-content: center; 
+      gap: 32px; 
+      margin: 40px 0; 
+    }
+    .socials img { 
+      width: 48px; 
+      height: 48px; 
+    }
+    .apps { 
+      display: flex; 
+      justify-content: center; 
+      gap: 24px; 
+      margin: 30px 0; 
+    }
+    .apps img { 
+      height: 56px; 
+    }
+    .faq { 
+      line-height: 1.8; 
+      font-size: 15px; 
+    }
+    .faq b { 
+      display: block; 
+      margin: 16px 0 8px; 
+      font-size: 16px; 
+    }
+    .footer { 
+      text-align: center; 
+      padding: 50px 0 20px; 
+      color: #666; 
+      font-size: 14px; 
+    }
     
-    /* Стили для голосования */
+    /* Голосование */
     .voting-card {
-      background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+      background: linear-gradient(135deg, #e4263f, #e4263f);
       color: white;
       border: none;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      box-shadow: 0 6px 20px rgba(255,0,0,0.45);
     }
-    .voting-card #results, .voting-card #user-message {
+    .voting-card #results,
+    .voting-card #user-message {
       color: white;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+    }
+
+    /* Таймер */
+    .voting-timer {
+      background: rgba(0,0,0,0.35);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 20px 0;
+      text-align: center;
+    }
+    .timer-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+    .timer-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+    .time-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 60px;
+    }
+    .time-value {
+      font-size: 28px;
+      font-weight: bold;
+      background: rgba(255,255,255,0.22);
+      padding: 8px 12px;
+      border-radius: 8px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .time-label {
+      font-size: 12px;
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+    .timer-expired {
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffeb3b;
     }
   </style>
 </head>
@@ -55,42 +209,65 @@
     <p class="subtitle">Добро пожаловать в «Чи-Фань» — сеть кафе уличной азиатской кухни во Владивостоке.<br>Лапша, рис, супы, салаты и многое другое — с доставкой или в наших кафе.</p>
   </div>
 
-  <!-- Голосование за сырный карри – вставлено сразу после приветствия -->
+  <!-- Голосование -->
   <div class="card voting-card">
-    <h2 style="margin: 0 0 20px; font-size: 26px;">ЯМЫ СЫРНЫЙ КАРРИ 😭🧀</h2>
+    <h2 style="margin: 0 0 20px; font-size: 28px; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">ЯМЫ СЫРНЫЙ КАРРИ 😭🧀🔥</h2>
     
-    <p style="font-size: 17px; line-height: 1.5; margin: 0 0 24px;">
+    <p style="font-size: 17px; line-height: 1.5; margin: 0 0 24px; text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">
       Друзья, прямо сейчас решается судьба нашего зимнего хита — <strong>сырного карри</strong>!<br>
       Мы ели его весь декабрь, а теперь шеф вероломно хочет убрать его из меню...
     </p>
     
-    <p style="font-size: 18px; font-weight: bold; margin: 0 0 24px;">
+    <p style="font-size: 19px; font-weight: bold; margin: 0 0 24px; text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">
       Судьба сырного карри зависит ТОЛЬКО ОТ ВАС!
     </p>
 
-    <div style="display: flex; flex-direction: column; gap: 16px; align-items: center;">
-      <button id="vote-yes" class="btn-big" style="background: #4CAF50; width: 100%; max-width: 340px;">
+    <!-- Таймер -->
+    <div id="voting-timer" class="voting-timer">
+      <div class="timer-title">Голосование завершится 20 января в 15:00 (Владивосток)</div>
+      <div class="timer-container">
+        <div class="time-unit">
+          <div class="time-value" id="days">00</div>
+          <div class="time-label">Дней</div>
+        </div>
+        <div class="time-unit">
+          <div class="time-value" id="hours">00</div>
+          <div class="time-label">Часов</div>
+        </div>
+        <div class="time-unit">
+          <div class="time-value" id="minutes">00</div>
+          <div class="time-label">Минут</div>
+        </div>
+        <div class="time-unit">
+          <div class="time-value" id="seconds">00</div>
+          <div class="time-label">Секунд</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 18px; align-items: center; margin-top: 20px;">
+      <button id="vote-yes" class="btn-big" style="background: #ffdd00;">
         Оставить сырный карри в меню ❤️
       </button>
       
-      <button id="vote-no" class="btn-big" style="background: #757575; width: 100%; max-width: 340px;">
+      <button id="vote-no" class="btn-big" style="background: #ffb300;">
         Убрать сырный карри из меню 😢
       </button>
     </div>
 
-    <p id="results" style="margin-top: 24px; font-size: 20px; font-weight: bold; text-align: center;">
+    <p id="results" style="margin-top: 28px; font-size: 22px; font-weight: bold; text-align: center;">
       Загрузка голосов...
     </p>
 
-    <p id="user-message" style="margin-top: 16px; font-size: 15px; text-align: center; opacity: 0.95;"></p>
+    <p id="user-message" style="margin-top: 16px; font-size: 16px; text-align: center;"></p>
   </div>
 
-  <!-- Остальные элементы без изменений -->
   <a href="https://momchifan.ru/" class="btn-big">Заказать</a>
   <a href="https://t.me/momchifan" class="btn-big btn-outline">Написать в чат</a>
 
   <div class="card">
     <h2>Наши филиалы</h2>
+    <!-- ... (все филиалы остаются без изменений) ... -->
     <div class="branch"><div class="branch-name">Чи-Фань на Сибирцева</div><div class="branch-type">Автокафе</div><div class="branch-row"><span class="icon">🕒</span> Пн–Вс: 10:00 – 03:00</div><div class="branch-row"><span class="icon">📍</span> ул. Всеволода Сибирцева, д. 59, ст. 2</div><div class="branch-row"><span class="icon">🚗</span> Парковка</div></div>
     <div class="branch"><div class="branch-name">Чи-Фань на Калинина</div><div class="branch-type">Кафе</div><div class="branch-row"><span class="icon">🕒</span> Пн–Вс: 10:00 – 21:00</div><div class="branch-row"><span class="icon">📍</span> ул. Калинина, 275а</div><div class="branch-row"><span class="icon">🚗</span> Парковка</div></div>
     <div class="branch"><div class="branch-name">Чи-Фань на Светланской</div><div class="branch-type">Кафе</div><div class="branch-row"><span class="icon">🕒</span> Пн–Вс: 10:00 – 22:00</div><div class="branch-row"><span class="icon">📍</span> ул. Светланская, 9б</div><div class="branch-row"><span class="icon">🚗</span> Парковка</div></div>
@@ -133,18 +310,45 @@ const GITHUB = {
   owner: 'wwwgolybfs-dev',
   repo: 'HelpChifanbot',
   path: 'votes.json',
-  token: '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'  
+  token: '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' 
 };
 
 const YES = 'yes';
 const NO = 'no';
 
-// Получаем Telegram User ID
+// Дедлайн: 20 января 2026 15:00 VLAT → 05:00 UTC
+const DEADLINE = new Date('2026-01-20T05:00:00Z').getTime();
+
+// Telegram User ID
 let userId = null;
 if (window.Telegram?.WebApp?.initDataUnsafe?.user?.id) {
   userId = window.Telegram.WebApp.initDataUnsafe.user.id.toString();
 } else {
   document.getElementById('user-message').textContent = 'Запустите в Telegram для участия в голосовании';
+}
+
+// =============================================
+// Таймер
+function updateTimer() {
+  const now = Date.now();
+  const distance = DEADLINE - now;
+
+  if (distance <= 0) {
+    document.getElementById('voting-timer').innerHTML = '<div class="timer-expired">Голосование завершено!</div>';
+    disableButtons();
+    document.getElementById('user-message').textContent = 'Голосование закрыто';
+    return;
+  }
+
+  const days    = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  document.getElementById('days').textContent    = days.toString().padStart(2, '0');
+  document.getElementById('hours').textContent   = hours.toString().padStart(2, '0');
+  document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+  document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
 }
 
 // =============================================
@@ -154,26 +358,33 @@ async function loadResults() {
     const res = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.path}`, {
       headers: { 'Authorization': `token ${GITHUB.token}` }
     });
-    if (!res.ok) throw new Error();
-    
+    if (!res.ok) throw new Error('Ошибка API: ' + res.status);
+
     const data = await res.json();
-    const votes = JSON.parse(atob(data.content));
-    
+    let base64Content = data.content.replace(/\s+/g, '');
+    const votes = JSON.parse(atob(base64Content));
+
     document.getElementById('results').textContent = `За оставить: ${votes.yes || 0} • Против: ${votes.no || 0}`;
-    
+
     if (userId && votes.voters?.[userId]) {
       const text = votes.voters[userId] === YES ? 'за сохранение' : 'за удаление';
       document.getElementById('user-message').textContent = `Вы уже голосовали ${text}`;
       disableButtons();
     }
   } catch (e) {
+    console.error('Ошибка загрузки:', e);
     document.getElementById('results').textContent = 'Ошибка загрузки голосов 😔';
   }
 }
 
 // =============================================
-// Отправка голоса
+// Голосование
 async function vote(choice) {
+  if (Date.now() >= DEADLINE) {
+    alert('Голосование завершено!');
+    return;
+  }
+
   if (!userId) {
     alert('Голосование доступно только в Telegram');
     return;
@@ -186,7 +397,9 @@ async function vote(choice) {
       headers: { 'Authorization': `token ${GITHUB.token}` }
     });
     const file = await getRes.json();
-    let votes = JSON.parse(atob(file.content));
+    
+    let base64Content = file.content.replace(/\s+/g, '');
+    let votes = JSON.parse(atob(base64Content));
 
     if (votes.voters?.[userId]) {
       alert('Вы уже голосовали!');
@@ -207,7 +420,7 @@ async function vote(choice) {
         message: `Голосование: +1 ${choice}`,
         content: btoa(JSON.stringify(votes)),
         sha: file.sha,
-        branch: 'main'  // или 'master' — проверьте свою ветку
+        branch: 'main'
       })
     });
 
@@ -224,42 +437,48 @@ function disableButtons() {
   document.getElementById('vote-no').disabled = true;
 }
 
-// Привязка событий
-document.getElementById('vote-yes').onclick = () => vote(YES);
-document.getElementById('vote-no').onclick = () => vote(NO);
+// События
+document.getElementById('vote-yes').onclick = () => vote('yes');
+document.getElementById('vote-no').onclick = () => vote('no');
 
 // Запуск
-window.addEventListener('load', loadResults);
+window.addEventListener('load', () => {
+  loadResults();
+  updateTimer();
+  setInterval(updateTimer, 1000);
+});
 
-// Подготовка Telegram Web App
 if (window.Telegram?.WebApp) {
   window.Telegram.WebApp.ready();
   window.Telegram.WebApp.expand();
 }
 
-// Яндекс карты (оставляем как было)
+// Яндекс.Карты
 ymaps.ready(initMap);
 function initMap() {
-    var myMap = new ymaps.Map("map", {
-        center: [43.115, 131.885],
-        zoom: 12,
-        controls: ['zoomControl', 'fullscreenControl']
+  var myMap = new ymaps.Map("map", {
+    center: [43.115, 131.885],
+    zoom: 12,
+    controls: ['zoomControl', 'fullscreenControl']
+  });
+
+  var branches = [
+    [[43.119016, 131.907513], "Чи-Фань на Сибирцева", "Автокафе, ул. Всеволода Сибирцева, 59, ст. 2<br>Пн–Вс: 10:00 – 03:00"],
+    [[43.0934415, 131.901757], "Чи-Фань на Калинина", "Кафе, ул. Калинина, 275а<br>Пн–Вс: 10:00 – 21:00"],
+    [[43.116913, 131.881732], "Чи-Фань на Светланской", "Кафе, ул. Светланская, 9б<br>Пн–Вс: 10:00 – 22:00"],
+    [[43.122530, 131.926748], "Чи-Фань на Тобольской", "Автокафе, ул. Тобольская, 10, ст. 2<br>Пн–Вс: 10:00 – 00:00"],
+    [[43.092003, 131.970610], "Чи-Фань на Добровольского", "Кафе, ул. Добровольского, 5а ст1<br>Пн–Вс: 10:00 – 23:00"]
+  ];
+
+  branches.forEach(function(branch) {
+    var placemark = new ymaps.Placemark(branch[0], {
+      hintContent: branch[1],
+      balloonContent: '<strong>' + branch[1] + '</strong><br>' + branch[2]
     });
-    var branches = [
-        [[43.119016, 131.907513], "Чи-Фань на Сибирцева", "Автокафе, ул. Всеволода Сибирцева, 59, ст. 2<br>Пн–Вс: 10:00 – 03:00"],
-        [[43.0934415, 131.901757], "Чи-Фань на Калинина", "Кафе, ул. Калинина, 275а<br>Пн–Вс: 10:00 – 21:00"],
-        [[43.116913, 131.881732], "Чи-Фань на Светланской", "Кафе, ул. Светланская, 9б<br>Пн–Вс: 10:00 – 22:00"],
-        [[43.122530, 131.926748], "Чи-Фань на Тобольской", "Автокафе, ул. Тобольская, 10, ст. 2<br>Пн–Вс: 10:00 – 00:00"],
-        [[43.092003, 131.970610], "Чи-Фань на Добровольского", "Кафе, ул. Добровольского, 5а ст1<br>Пн–Вс: 10:00 – 23:00"]
-    ];
-    branches.forEach(function(branch) {
-        var placemark = new ymaps.Placemark(branch[0], {
-            hintContent: branch[1],
-            balloonContent: '<strong>' + branch[1] + '</strong><br>' + branch[2]
-        });
-        myMap.geoObjects.add(placemark);
-    });
-    myMap.setBounds(myMap.geoObjects.getBounds(), { checkZoomRange: true });
+    myMap.geoObjects.add(placemark);
+  });
+
+  myMap.setBounds(myMap.geoObjects.getBounds(), { checkZoomRange: true });
 }
 </script>
 </body>
