@@ -32,41 +32,6 @@
     .faq { line-height: 1.8; font-size: 15px; }
     .faq b { display: block; margin: 16px 0 8px; font-size: 16px; }
     .footer { text-align: center; padding: 50px 0 20px; color: #666; font-size: 14px; }
-    
-    /* Голосование */
-    .voting-card {
-      background: linear-gradient(135deg, #e4263f, #e4263f);
-      color: white;
-      border: none;
-      box-shadow: 0 6px 20px rgba(255,0,0,0.45);
-    }
-    .voting-card #results, .voting-card #user-message {
-      color: white;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
-    }
-
-    /* Таймер */
-    .voting-timer {
-      background: rgba(0,0,0,0.35);
-      border-radius: 12px;
-      padding: 16px;
-      margin: 20px 0;
-      text-align: center;
-    }
-    .timer-title { font-size: 16px; font-weight: bold; margin-bottom: 12px; }
-    .timer-container { display: flex; justify-content: center; gap: 12px; }
-    .time-unit { display: flex; flex-direction: column; align-items: center; min-width: 60px; }
-    .time-value {
-      font-size: 28px;
-      font-weight: bold;
-      background: rgba(255,255,255,0.22);
-      padding: 8px 12px;
-      border-radius: 8px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .time-label { font-size: 12px; margin-top: 4px; text-transform: uppercase; }
-    .timer-expired { font-size: 18px; font-weight: bold; color: #ffeb3b; }
   </style>
 </head>
 <body>
@@ -77,40 +42,7 @@
     <p class="subtitle">Добро пожаловать в «Чи-Фань» — сеть кафе уличной азиатской кухни во Владивостоке.<br>Лапша, рис, супы, салаты и многое другое — с доставкой или в наших кафе.</p>
   </div>
 
-  <!-- Голосование -->
-  <div class="card voting-card">
-    <h2 style="margin: 0 0 20px; font-size: 28px; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">ЯМЫ СЫРНЫЙ КАРРИ 😭🧀🔥</h2>
-    
-    <p style="font-size: 17px; line-height: 1.5; margin: 0 0 24px; text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">
-      Друзья, прямо сейчас решается судьба нашего зимнего хита — <strong>сырного карри</strong>!<br>
-      Мы ели его весь декабрь, а теперь шеф вероломно хочет убрать его из меню...
-    </p>
-    
-    <p style="font-size: 19px; font-weight: bold; margin: 0 0 24px; text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">
-      Судьба сырного карри зависит ТОЛЬКО ОТ ВАС!
-    </p>
-
-    <!-- Таймер -->
-    <div id="voting-timer" class="voting-timer">
-      <div class="timer-title">Голосование завершится 20 января в 15:00 (Владивосток)</div>
-      <div class="timer-container">
-        <div class="time-unit"><div class="time-value" id="days">00</div><div class="time-label">Дней</div></div>
-        <div class="time-unit"><div class="time-value" id="hours">00</div><div class="time-label">Часов</div></div>
-        <div class="time-unit"><div class="time-value" id="minutes">00</div><div class="time-label">Минут</div></div>
-        <div class="time-unit"><div class="time-value" id="seconds">00</div><div class="time-label">Секунд</div></div>
-      </div>
-    </div>
-
-    <div style="display: flex; flex-direction: column; gap: 18px; align-items: center; margin-top: 20px;">
-      <button id="vote-yes" class="btn-big" style="background: #ffdd00;">Оставить сырный карри в меню ❤️</button>
-      <button id="vote-no" class="btn-big" style="background: #ffb300;">Убрать сырный карри из меню 😢</button>
-    </div>
-
-    <p id="results" style="margin-top: 28px; font-size: 22px; font-weight: bold; text-align: center;">Загрузка голосов...</p>
-    <p id="user-message" style="margin-top: 16px; font-size: 16px; text-align: center;"></p>
-  </div>
-
-  <a href="https://momchifan.ru/" class="btn-big">Заказать</a>
+  <a href="https://momchifan.ru/" class="btn-big btn-outline">Заказать</a>
   <a href="https://t.me/momchifan" class="btn-big btn-outline">Написать в чат</a>
 
   <div class="card">
@@ -148,151 +80,10 @@
     </div>
   </div>
 
-  <div class="footer">Чи-Фань — еда, которая вдохновляет<br>Владивосток © 2025</div>
+  <div class="footer">Чи-Фань — еда, которая вдохновляет<br>Владивосток © 2026</div>
 </div>
 
 <script>
-// === Настройки ===
-const WORKER_URL = 'https://wispy-meadow-78b4.wwwgolybfs.workers.dev/votes';
-const YES = 'yes';
-const NO = 'no';
-
-// Дедлайн: 20 января 2026 15:00 VLAT → 05:00 UTC
-const DEADLINE = new Date('2026-01-20T05:00:00Z').getTime();
-
-// Telegram User ID
-let userId = null;
-if (window.Telegram?.WebApp?.initDataUnsafe?.user?.id) {
-  userId = window.Telegram.WebApp.initDataUnsafe.user.id.toString();
-} else {
-  document.getElementById('user-message').textContent = 'Запустите в Telegram для участия в голосовании';
-}
-
-// =============================================
-// Таймер
-function updateTimer() {
-  const now = Date.now();
-  const distance = DEADLINE - now;
-
-  if (distance <= 0) {
-    document.getElementById('voting-timer').innerHTML = '<div class="timer-expired">Голосование завершено!</div>';
-    disableButtons();
-    document.getElementById('user-message').textContent = 'Голосование закрыто';
-    return;
-  }
-
-  const days    = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  document.getElementById('days').textContent    = days.toString().padStart(2, '0');
-  document.getElementById('hours').textContent   = hours.toString().padStart(2, '0');
-  document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-  document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-}
-
-// =============================================
-// Загрузка результатов через Worker
-async function loadResults() {
-  try {
-    const res = await fetch(WORKER_URL);
-    if (!res.ok) throw new Error(`Worker error: ${res.status}`);
-
-    const base64Content = await res.text();
-    let cleanBase64 = base64Content.replace(/\s+/g, '');
-    const votes = JSON.parse(atob(cleanBase64));
-
-    document.getElementById('results').textContent = `За оставить: ${votes.yes || 0} • Против: ${votes.no || 0}`;
-
-    if (userId && votes.voters?.[userId]) {
-      const text = votes.voters[userId] === YES ? 'за сохранение' : 'за удаление';
-      document.getElementById('user-message').textContent = `Вы уже голосовали ${text}`;
-      disableButtons();
-    }
-  } catch (e) {
-    console.error('Ошибка загрузки:', e);
-    document.getElementById('results').textContent = 'Ошибка загрузки голосов 😔';
-  }
-}
-
-// =============================================
-// Голосование через Worker
-async function vote(choice) {
-  if (Date.now() >= DEADLINE) {
-    alert('Голосование завершено!');
-    return;
-  }
-
-  if (!userId) {
-    alert('Голосование доступно только в Telegram');
-    return;
-  }
-
-  if (!confirm(`Подтверждаете голос "${choice === YES ? 'ЗА оставить' : 'ПРОТИВ'}"?`)) return;
-
-  try {
-    // 1. Получаем текущие голоса
-    const getRes = await fetch(WORKER_URL);
-    if (!getRes.ok) throw new Error('Cannot load current votes');
-
-    const base64Content = await getRes.text();
-    let cleanBase64 = base64Content.replace(/\s+/g, '');
-    let votes = JSON.parse(atob(cleanBase64));
-
-    if (votes.voters?.[userId]) {
-      alert('Вы уже голосовали!');
-      return;
-    }
-
-    votes[choice] = (votes[choice] || 0) + 1;
-    votes.voters = votes.voters || {};
-    votes.voters[userId] = choice;
-
-    // 2. Отправляем обновление
-    const base64New = btoa(JSON.stringify(votes));
-    const updateRes = await fetch(WORKER_URL, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'text/plain' },
-      body: base64New
-    });
-
-    if (!updateRes.ok) {
-      const err = await updateRes.text();
-      throw new Error(`Update failed: ${err}`);
-    }
-
-    alert('Голос учтён! Спасибо!');
-    loadResults();
-    disableButtons();
-  } catch (e) {
-    console.error('Ошибка голосования:', e);
-    alert('Не удалось сохранить голос\n' + (e.message || 'Неизвестная ошибка'));
-  }
-}
-
-function disableButtons() {
-  document.getElementById('vote-yes').disabled = true;
-  document.getElementById('vote-no').disabled = true;
-}
-
-// События
-document.getElementById('vote-yes').onclick = () => vote(YES);
-document.getElementById('vote-no').onclick = () => vote(NO);
-
-// Запуск
-window.addEventListener('load', () => {
-  loadResults();
-  updateTimer();
-  setInterval(updateTimer, 1000);
-});
-
-if (window.Telegram?.WebApp) {
-  window.Telegram.WebApp.ready();
-  window.Telegram.WebApp.expand();
-}
-
-// Яндекс.Карты
 ymaps.ready(initMap);
 function initMap() {
   var myMap = new ymaps.Map("map", {
@@ -318,6 +109,11 @@ function initMap() {
   });
 
   myMap.setBounds(myMap.geoObjects.getBounds(), { checkZoomRange: true });
+}
+
+if (window.Telegram?.WebApp) {
+  window.Telegram.WebApp.ready();
+  window.Telegram.WebApp.expand();
 }
 </script>
 </body>
